@@ -1,0 +1,20 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '9.0'
+
+def common
+    pod 'WeexSDK', :path => '../../../plugins/eeui/WeexSDK/ios'
+    pod 'eeui', :path => '../../../plugins/eeui/framework/ios'
+    pod 'SocketRocket', '0.5.1'
+    pod 'BindingX', '~> 1.0.3'
+    pod 'eeuiAmap', :path => '../../../plugins/eeui/amap/ios'
+    pod 'eeuiPicture', :path => '../../../plugins/eeui/picture/ios'
+    #pod 'hongkongnameBinexample', :path => '../../../plugins/hongkongname/binexample/ios'
+end
+
+target 'eeuiApp' do
+    common
+    pod 'AMapFoundation'
+    pod 'AMapLocation'
+    pod 'AMapTrack'
+    pod 'AMap3DMap'
+end

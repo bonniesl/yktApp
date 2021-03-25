@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+    <script>
+        !(function(win, doc) {
+                function setFontSize() {
+                    var winWidth = window.innerWidth;
+                    var size = (winWidth / 750) * 100;
+                    doc.documentElement.style.fontSize = (size < 100 ? size : 100) + 'px';
+                }
+                var evt = 'onorientationchange' in win ? 'orientationchange' : 'resize';
+                var timer = null;
+                win.addEventListener(evt, function() {
+                    clearTimeout(timer);
+                    timer = setTimeout(setFontSize, 100);
+                }, false);
+                win.addEventListener("pageshow", function(e) {
+                    if(e.persisted) {
+                        clearTimeout(timer);
+
+                        timer = setTimeout(setFontSize, 100);
+                    }
+                }, false);
+                setFontSize();
+
+                setTimeout(function() {
+                    setFontSize()
+                }, 150);
+
+            }(window, document));
+    </script>
+    
+    <!--<script type="text/javascript" src="./echarts.min.js"></script>-->
+    <script src="https://www.asyke.com/static/js/jquery.2.js"></script>
+    <script type="text/javascript" src="echarts.min.js"></script>
+    <script type="text/javascript" src="bmap.min.js"></script>
+    <script type="text/javascript" src="lazyload-min.js"></script>
+    <style type="text/css">
+        *, html, body {
+            margin: 0;
+            padding: 0;
+        }
+        #loading {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-size: 14px;
+            color: #999;
+        }
+        html, body {
+           height:100%;
+           -webkit-overflow-scrolling: touch;
+            overflow-y: scroll;
+        }
+      
+      
+        #container{
+            height:4rem;
+        }
+        .valueList{
+                display:flex;
+                flex-direction: row;
+                height: 79;
+                border-bottom-color: #dadada;
+                border-bottom-style: solid;
+                border-bottom-width: 1px;
+                justify-content: space-between;
+                margin-left: 30;
+                margin-right: 30;
+            }
+        .valueitem{
+            display:flex;
+            flex-direction: row;
+            height: 0.79rem;
+            justify-content: space-between;
+            align-items: center;
+            width: 3.26rem;
+        }
+        .valueText{
+            font-size: 0.27rem;
+            color: #575757;
+            margin-left: 0.18rem;
+        }
+        .iconleft{
+            display:flex;
+            flex-direction: row;
+            height: 0.79rem;
+            align-items: center;
+        }
+        .value{
+            font-size: 0.32rem;
+            color: #4e4e4e;     
+        }
+        .onevaluelist{
+            margin-top: 0.2rem;
+        }
+        .valuebox{
+            display:flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .valueP{
+            font-size: 0.27rem;
+            color: #4E4E4E;
+        }
+        .timestit{
+            display: block;
+            font-size: 0.27rem;
+            color: #575757;
+            border-bottom-color: #DADADA;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            padding-bottom: 0.16rem;
+            margin-top: 0.35rem;
+        }
+        .times{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-between;
+            height: 1.01rem;
+            align-items: center;
+            border-bottom-color: #DADADA;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+        }
+        .timesleft{
+            display:flex;
+            flex-direction: row;
+            height: 1.01rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .timesiconbox{
+            width: 0.5rem;
+            position: relative;
+        }
+        .error{
+        position: absolute;
+            top: 0.38rem;
+            right: 2px; 
+        }
+        .sh{
+            position: absolute;
+            top: 0.38rem;
+            right: 2px;
+        }
+        .timestext{
+            font-size: 0.27rem;
+            color: #575757;
+            margin-left: 0.34rem;
+        }
+        .iconback{
+            width: 0.5rem;
+            height: 0.5rem;
+            color: #999;
+        }
+        .timesbox{
+            /* height:5rem; */
+            /* overflow: scroll */
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        } 
+    </style>
+    
+</head>
+<body>
+        <div id="app">
+        <div id="loading">Loading...</div>
+        <div id="dayCon">
+            <div id="container"></div>
+            <div id="dayNewWrap">
+
+            </div>
+            
+            <!-- <div class="timesbox" v-for="(item,index) in dayList" v-if="index==xIndex">
+                    <div class="timesList">
+                        <div class="timeslistBox">
+                            <span class="timestit">{{item.dayCtime}}</span>
+                            <div class="times" v-for="(list,idx) in item.dayListInfo">
+                                <div class="timesleft">
+                                    <div class="timesiconbox">
+                                        <image class="timesshan" src="../../assets/images/shanicon.png" style="width:0.39rem;height:0.4rem"></image>
+                                        <image v-if="list.check_status==1" class="sh" src="../../assets/images/shicon.png" style="width:0.28rem;height:0.28rem"></image>
+                                        <image v-if="list.status==2"  class="error" src="../../assets/images/erricon.png" style="width:0.28rem;height:0.28rem"></image>
+                                    </div>
+                                    <span class="timestext">{{list.run_type==0 ? '自由跑' : '体育成绩跑'}}</span>
+                                    <span class="timestext">{{formatSeconds(list.spend_time)}}</span>
+                                </div>
+                                <div class="valuebox">
+                                    <span class="value">{{list.metre/1000}}</span>
+                                    <span class="valueP">公里</span>
+                                    <icon class="iconback" :eeui="{content:'ios-arrow-forward',fontSize:50}"></icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div> -->
+        </div>
+    </div>
+    <script src="https://www.asyke.com/static/js/vue.js"></script>
+    <script type="text/javascript">
+        let eeui = null;
+        let myChart = null;
+        let xIndex=0;
+        let dayhtml = '';
+        
+        function loadOption() {
+            let hash = window.location.hash;
+            if (hash.substring(0,1) === "#") {
+                hash = hash.substring(1);
+            }
+            let option = null;
+
+            try{
+                option = JSON.parse(eeui.getVariate("components::echarts::option:" + hash));
+           
+            }catch (e) {
+                option = {};
+      
+            }
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+            
+        }
+        function calorieAdd(item){
+            let cc=[];
+            let calorie=0;
+            item.map(function(list,idx){     
+                calorie+=list.calorie;
+                // cc.push(list.calorie/1000);                          
+            }) 
+            // return eval(cc.join('+'));
+            return calorie;
+        }
+        
+        function  meterAdd(item){
+            let cc=[];
+            let meter=0;
+            item.map(function(list,idx){     
+                meter+=list.metre;
+                // cc.push(list.metre/1000);                          
+            }) 
+            return (meter/1000).toFixed(2);
+        }
+
+        function spendTimeAdd(item){
+            let cc=[];
+        
+            item.map(function(list,idx){     
+                cc.push(parseInt(list.spend_time));                          
+            }) 
+            return eval(cc.join('+'));
+        }
+
+        function formatSeconds(value) {
+        　　let result = parseInt(value)
+        　　let h = Math.floor(result / 3600) < 10 ? '0' + Math.floor(result / 3600) : Math.floor(result / 3600)
+        　　let m = Math.floor((result / 60 % 60)) < 10 ? '0' + Math.floor((result / 60 % 60)) : Math.floor((result / 60 % 60))
+        　　let s = Math.floor((result % 60)) < 10 ? '0' + Math.floor((result % 60)) : Math.floor((result % 60))
+        　　result = h+":"+m+ ":"+s+"";
+        　　return result
+        }
+
+        function  s_to_hs(s){
+            var m;
+            
+            m  =   Math.floor(s/60);
+            s  =   s%60;
+            m    +=    ``;
+            s    +=    ``;
+            m  =   (m.length==1)?'0'+m:m;
+            s  =   (s.length==1)?'0'+s:s;
+            return h+"`"+s+"'``";
+        }
+
+        function  validmeterAdd(item){
+            let cc=[];
+            let meter=0;
+            item.map(function(list,idx){
+                meter+=list.valid_metre;
+                // cc.push(list.metre/1000);                          
+            }) 
+            return (meter/1000).toFixed(2);
+            
+        }
+
+        function  testmeterAdd(item){
+            let cc=[];
+            let meter=0;
+            item.map(function(list,idx){     
+                meter+=list.test_metre;
+                // cc.push(list.metre/1000);                          
+            }) 
+            return (meter/1000).toFixed(2);
+   
+        }
+
+        function htmlConnect(list){
+            let html='';
+            html +=`<div class="onevaluelist">
+                        <div class="valueList">
+                            <div class="valueitem">
+                                <div class="iconleft">
+                                    <image src="../../assets/images/timeicon.png" style="width:0.46rem;height:0.46rem;"></image>
+                                    <span class="valueText">时长</span>
+                                </div>
+                                <span class="value">${formatSeconds(spendTimeAdd(list.dayListInfo))}</span>
+                            </div>
+                            <div class="valueitem">
+                                <div class="iconleft">
+                                    <image src="../../assets/images/disicon.png" style="width:0.46rem;height:0.46rem;"></image>
+                                    <span class="valueText">距离</span>
+                                </div>
+                                <div class="valuebox">
+                                    <span class="value">${meterAdd(list.dayListInfo)}</span>
+                                    <span class="valueP">公里</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="valueList">
+                            <div class="valueitem">
+                                <div class="iconleft">
+                                    <image src="../../assets/images/timesicon.png" style="width:0.46rem;height:0.46rem;"></image>
+                                    <span class="valueText">跑步次数</span>
+                                </div>
+                                <div class="valuebox">
+                                    <span class="value">${list.dayListInfo.length}</span>
+                                    <span class="valueP">次</span>
+                                </div>
+                            </div>
+                            <div class="valueitem">
+                                <div class="iconleft">
+                                    <image src="../../assets/images/klicon.png" style="width:0.46rem;height:0.46rem;"></image>
+                                    <span class="valueText">卡路里</span>
+                                </div>
+                                <div class="valuebox">
+                                    <span class="value">${calorieAdd(list.dayListInfo)}</span>
+                                    <span class="valueP">千卡</span>
+                                </div>
+                                
+                            </div>
+                        </div> 
+                        <div class="valueList">
+                            <div class="valueitem">
+                                <div class="iconleft">
+                                    <image src="../../assets/images/yxicon.png" style="width:0.46rem;height:0.46rem;"></image>
+                                    <span class="valueText">有效公里数</span>
+                                </div>
+                                <div class="valuebox">
+                                    <span class="value">${validmeterAdd(list.dayListInfo)}</span>
+                                  
+                                </div>
+                            </div>
+                            <div class="valueitem">
+                                <div class="iconleft">
+                                    <image src="../../assets/images/gradeicon.png" style="width:0.46rem;height:0.46rem;"></image>
+                                    <span class="valueText">成绩公里数</span>
+                                </div>
+                                <div class="valuebox">
+                                    <span class="value">${testmeterAdd(list.dayListInfo)}</span>
+                                   
+                                </div>
+                                
+                            </div>
+                        </div>              
+            </div>`;
+            return html;
+        }
+
+        function htmlConnect1(list){
+            let html='';
+            html +=`<div class="timesbox">
+                    <div class="timesList">
+                        <div class="timeslistBox">
+                            <span class="timestit">${list.dayCtime}</span>`;
+            list.dayListInfo.map(function(item,index){
+                html += `<div class="times" data-id="${item.course_class_user_run_id}">
+                                <div class="timesleft">
+                                    <div class="timesiconbox">
+                                        <image class="timesshan" src="../../assets/images/shanicon.png" style="width:0.39rem;height:0.4rem"></image>
+                                        <image v-if="list.check_status==1" class="sh" src="../../assets/images/shicon.png" style="width:0.28rem;height:0.28rem"></image>
+                                        <image v-if="list.status==2"  class="error" src="../../assets/images/erricon.png" style="width:0.28rem;height:0.28rem"></image>
+                                    </div>
+                                    <span class="timestext">${item.run_type==0 ? '自由跑' : '体育成绩跑'}</span>
+                                    <span class="timestext">${formatSeconds(item.spend_time)}</span>
+                                </div>
+                                <div class="valuebox">
+                                    <span class="value">${(item.metre/1000).toFixed(2)}</span>
+                                    <span class="valueP">公里</span>
+                                    <image class="more" src="../../assets/images/more.png" style="width:0.36rem;height:0.36rem;margin-left:0.2rem"></image>
+                                </div>
+                            </div>`
+            })
+            html += ` </div>
+                    </div>
+                </div>`
+            return html;
+        }
+
+        function $ready() {
+            
+            eeui = requireModuleJs("eeui");
+            myChart = echarts.init(document.getElementById("container"));
+            
+            LazyLoad.js("https://api.map.baidu.com/api?v=2.0&ak=" + eeui.getVariate("components::echarts::baidukey"), function () {
+                loadOption();
+                window.onresize = function(){
+                    myChart.resize();
+                }
+            });
+          
+            
+            let hash = window.location.hash;
+            if (hash.substring(0,1) === "#") {
+                hash = hash.substring(1);
+            }
+     
+            let dayList = JSON.parse(eeui.getVariate("components::echarts::dlList:" + hash));
+
+             let  userInfos = JSON.parse(eeui.getVariate("components::echarts::userInfos:" + hash));
+            
+            let opttt= JSON.parse(eeui.getVariate("components::echarts::option:" + hash));
+
+            let sdateC = eeui.getVariate("components::echarts::sdateC:" + hash);
+
+            let idx=eeui.getVariate("components::echarts::idx:" + hash);
+
+        
+            // var timeout = setTimeout(function() {
+            //     document.getElementById("loading").style.display = "block";
+            // }, 300);
+            // myChart.on('rendered', function () {
+            //     clearInterval(timeout);
+            //     document.getElementById("loading").style.display = "none";
+            // });
+
+            myChart.getZr().on('click',  function (params) {  
+               
+                let pointInPixel = [params.offsetX, params.offsetY]
+                if (myChart.containPixel('grid', pointInPixel)) {
+                    xIndex = myChart.convertFromPixel({ seriesIndex: 0 }, [params.offsetX, params.offsetY])[0];
+
+                    opttt.series[0].itemStyle.normal.color=function(params){           
+                        var key = params.dataIndex;
+                        if(key===xIndex){
+                            return 'orange'
+                        }else{
+                            return '#00C179'
+                        }
+                    }
+
+             
+
+                    myChart.setOption(opttt, true);
+                   
+                }
+               
+
+                if(dayList.length!=0){
+                    dayList.map(function(item,index){
+
+                        if(index==xIndex){      
+                            dayhtml= htmlConnect(item);
+                            dayhtml+=htmlConnect1(item);
+                        }
+                    })
+                    document.getElementById("dayNewWrap").innerHTML=dayhtml;
+                }
+            })
+
+            if(dayList.length!=0){
+
+                    if(idx){
+                        dayhtml=htmlConnect(dayList[idx]);
+                        dayhtml+=htmlConnect1(dayList[idx]);
+                        document.getElementById("dayNewWrap").innerHTML=dayhtml;   
+                    }
+                    
+                    if(!sdateC){
+                        dayhtml=htmlConnect(dayList[xIndex]);
+                        dayhtml+=htmlConnect1(dayList[xIndex]);
+                        document.getElementById("dayNewWrap").innerHTML=dayhtml;
+                    }
+                   
+            }
+
+            $('#dayNewWrap').on('click','.times',  function () {  
+                let coursid =$(this).data('id');
+          
+                eeui.openPage({
+                    url: 'userRunoutDetail.js',
+                    statusBarColor:'#1eb76e',
+                    pageName:'userRunoutDetail',
+                    animated:false,
+                    params:{coursid:  coursid,opUid:userInfos.uid,userInfos: userInfos.user}
+                }, function(result) {
+                    
+                }); 
+            })
+
+            
+        }
+
+          
+
+           
+
+       
+    </script>
+    
+</body>
+</html>

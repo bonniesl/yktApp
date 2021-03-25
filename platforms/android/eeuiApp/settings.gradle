@@ -1,0 +1,13 @@
+include ':app'
+
+include ":eeui"
+project (':eeui').projectDir = new File("../../../plugins/eeui/framework/android")
+
+include ":eeuiAmap"
+project (":eeuiAmap").projectDir = new File("../../../plugins/eeui/amap/android")
+
+include ":eeuiPicture"
+project (":eeuiPicture").projectDir = new File("../../../plugins/eeui/picture/android")
+
+include ":eeuiNetwork"
+project (":eeuiNetwork").projectDir = new File("../../../plugins/eeui/network/android")

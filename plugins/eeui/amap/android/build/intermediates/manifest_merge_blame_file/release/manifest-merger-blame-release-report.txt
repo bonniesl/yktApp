@@ -1,0 +1,56 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    xmlns:tools="http://schemas.android.com/tools"
+4    package="eeui.android.amap" >
+5
+6    <uses-sdk
+7        android:minSdkVersion="16"
+7-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml
+8        android:targetSdkVersion="28" />
+8-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml
+9
+10    <uses-permission android:name="android.permission.INTERNET" />
+10-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:5:5-67
+10-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:5:22-64
+11    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+11-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:6:5-81
+11-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:6:22-78
+12    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+12-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:7:5-81
+12-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:7:22-78
+13    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+13-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:8:5-79
+13-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:8:22-76
+14    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+14-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:9:5-75
+14-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:9:22-72
+15    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+15-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:10:5-76
+15-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:10:22-73
+16    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+16-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:11:5-76
+16-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:11:22-73
+17    <uses-permission
+17-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:12:5-115
+18        android:name="android.permission.CHANGE_CONFIGURATION"
+18-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:12:22-76
+19        tools:ignore="ProtectedPermissions" />
+19-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:12:77-112
+20    <uses-permission android:name="android.permission.WAKE_LOCK" />
+20-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:13:5-68
+20-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:13:22-65
+21    <uses-permission
+21-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:14:5-109
+22        android:name="android.permission.WRITE_SETTINGS"
+22-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:14:22-70
+23        tools:ignore="ProtectedPermissions" />
+23-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:14:71-106
+24    <!-- 定位包、导航包需要的额外权限（注：基础权限也需要） -->
+25    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+25-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:16:5-79
+25-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:16:22-76
+26    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+26-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:17:5-89
+26-->/Users/zhangchaofan/Documents/askyeApp/zruupApp/plugins/eeui/amap/android/src/main/AndroidManifest.xml:17:22-86
+27
+28</manifest>

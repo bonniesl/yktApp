@@ -1,0 +1,8 @@
+{
+	"ok": true,
+	"appName": "asykeApp",
+	"applicationID": "asykeapp.app.simp",
+	"bundleIdentifier": "asykeapp.app.simp",
+	"location": "eeui",
+	"release": "2.2.3"
+}
